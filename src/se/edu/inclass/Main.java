@@ -5,7 +5,9 @@ import se.edu.inclass.task.Deadline;
 import se.edu.inclass.task.Task;
 import se.edu.inclass.task.TaskNameComparator;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -37,6 +39,20 @@ public class Main {
         for (Task t : tasksData) {
             System.out.println(t);
         }
+    }
+
+    public static void printDeadlinesUsingStream(ArrayList<Task> tasks) {
+        tasks.stream()
+                .filter((t) -> t instanceof Deadline)
+                .sorted((a,b) -> a.getDescription().toLowerCase().compareTo(b.getDescription().toLowerCase()))
+                .forEach(System.out::println);
+    }
+
+    public static ArrayList<Task> filterTasksByString(ArrayList<Task> tasks, String filterString) {
+        ArrayList<Task> filteredList = (ArrayList<Task>) tasks.stream()
+                .filter((t) -> t.getDescription().contains(filterString))
+                .collect(Collectors.toList());
+        return filteredList;
     }
 
     public static void printDeadlines(ArrayList<Task> tasksData) {
